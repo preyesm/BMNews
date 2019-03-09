@@ -3,6 +3,7 @@ package com.bmapps.bmnews.dagger;
 import com.bmapps.bmnews.network.NetworkCalls;
 import com.bmapps.bmnews.network.response.ErrorResponse;
 import com.bmapps.bmnews.presenter.FeedsPresenter;
+import com.bmapps.bmnews.repository.NetworkRepository;
 import com.bmapps.bmnews.ui.fragments.FeedListFragment;
 import com.bmapps.bmnews.utils.CollectionUtils;
 
@@ -22,6 +23,9 @@ public interface ApplicationComponent {
     void inject(ErrorResponse errorResponse);
 
     void inject(NetworkCalls networkCalls);
+
+    //repository
+    void inject(NetworkRepository networkRepository);
 
     //presenters
     void inject(FeedsPresenter feedsPresenter);

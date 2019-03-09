@@ -1,6 +1,6 @@
 package com.bmapps.bmnews.presenter;
 
-import com.bmapps.bmnews.ViewDetails.FeedViewDetails;
+import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 import com.bmapps.bmnews.network.response.FeedListResponse;
 import com.bmapps.bmnews.network.response.NewsFeed;
 
@@ -19,11 +19,11 @@ public interface FeedsPresenterInterface {
         return 1;
     }
 
-    void changeGroupId(int groupId);
+    void changeSource(String source);
 
-    void changeFeedType(String feedType);
+    void changeCategory(String feedType);
 
-    default void changeTopic(String topicString) {
+    default void changeCountry(String topicString) {
     }
 
     void getCompleteList();
@@ -31,8 +31,6 @@ public interface FeedsPresenterInterface {
     void fetchFeedDetails();
 
     void upsertFeedViewDetails(NewsFeed newsFeed, FeedViewDetails feedViewDetails, List<IFlexible> iFlexibleList);
-
-    void resetIsDetailsPage();
 
     default void checkTypeOfFeedsAndFetch() {
     }
@@ -46,8 +44,6 @@ public interface FeedsPresenterInterface {
 
 
     void setupSubscribers();
-
-    String getDetailsPageTitle();
 
     void decideEmptyStateBasedOnTab();
 

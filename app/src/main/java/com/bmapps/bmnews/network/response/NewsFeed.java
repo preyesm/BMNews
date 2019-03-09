@@ -12,7 +12,7 @@ public class NewsFeed extends RealmObject {
     private NewsSource newsSource;
 
     @SerializedName("author")
-    private Integer author;
+    private String author;
 
     @SerializedName("title")
     private String title;
@@ -40,11 +40,11 @@ public class NewsFeed extends RealmObject {
         this.newsSource = newsSource;
     }
 
-    public Integer getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(Integer author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

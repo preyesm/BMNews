@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="newsFeed"
+            type="com.bmapps.bmnews.viewDetails.FeedViewDetails" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/overflow_btn"
+            android:layout_width="40dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/transparent"
+            android:padding="@dimen/d8"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_blue_three_dots"
+            app:layout_constraintBottom_toBottomOf="@+id/img_news_source"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_news_source"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/img_news_source"
+            style="@style/item_margin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sriv_left_bottom_corner_radius="30dip"
+            app:sriv_left_top_corner_radius="30dip"
+            app:sriv_right_bottom_corner_radius="30dip"
+            app:sriv_right_top_corner_radius="30dip" />
+
+        <TextView
+            android:id="@+id/tv_author_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_medium"
+            android:maxLines="1"
+            android:paddingStart="6dp"
+            android:paddingEnd="5dp"
+            android:text="@{newsFeed.author}"
+            android:textColor="@color/onbaording_grey"
+            android:textSize="@dimen/s12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/overflow_btn"
+            app:layout_constraintStart_toEndOf="@+id/img_news_source"
+            app:layout_constraintTop_toTopOf="@+id/img_news_source"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tv_source"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
+            android:maxLines="1"
+            android:paddingStart="6dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="5dp"
+            android:text="@{newsFeed.source}"
+            android:textColor="@color/onbaording_grey"
+            android:textSize="@dimen/s12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_news_source"
+            app:layout_constraintTop_toBottomOf="@+id/tv_author_name"
+            tools:text="Agency" />
+
+        <TextView
+            android:id="@+id/feedPostedTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
+            android:maxLines="1"
+            android:paddingStart="6dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="6dp"
+            android:text="@{newsFeed.publishedAt}"
+            android:textColor="@color/posted_at_grey"
+            android:textSize="@dimen/s12"
+            app:layout_constraintStart_toEndOf="@+id/img_news_source"
+            app:layout_constraintTop_toBottomOf="@+id/tv_source"
+            tools:text="Nov. 8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

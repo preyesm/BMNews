@@ -26,8 +26,8 @@ public class NetworkCalls {
         application.getApplicationComponent().inject(this);
     }
 
-    public Observable<Response<FeedListResponse>> getAllNews(BaseView baseView) {
-        return newsFeedAPIs.getNewsFeeds()
+    public Observable<Response<FeedListResponse>> getAllNews(String countryCode, String category, String source, BaseView baseView) {
+        return newsFeedAPIs.getNewsFeeds(countryCode, category, source)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(throwable -> errorResponse.showError(baseView, throwable));

@@ -8,7 +8,7 @@ public class BaseResponse {
     public String message;
 
     @SerializedName("code")
-    public int code;
+    public String code;
 
 
 }

@@ -3,6 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="blue">#11adf3</color>
     <color name="black_transparent_60">#99000000</color>
     <color name="white">#ffffff</color>
     <color name="grey2">#ffdcdcdc</color>
@@ -11,4 +12,9 @@
     <color name="slate_grey">#696969</color>
     <color name="toolbar_view">#c9d1df</color>
     <color name="onbaording_grey">#354052</color>
+    <color name="grey_divider">#FAFBFB</color>
+    <color name="referral_client_count">#a5a8ad</color>
+    <color name="posted_at_grey">#989CA1</color>
+    <color name="transparent">#00000000</color>
 </resources>
+

@@ -24,6 +24,11 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <Button
+            android:id="@+id/reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <include
             android:id="@+id/feedlist_shimmer"
             layout="@layout/layout_feed_list_shimmer"

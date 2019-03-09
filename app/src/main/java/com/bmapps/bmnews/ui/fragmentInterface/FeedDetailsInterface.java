@@ -2,13 +2,11 @@ package com.bmapps.bmnews.ui.fragmentInterface;
 
 import android.app.Activity;
 
-import com.bmapps.bmnews.ViewDetails.FeedViewDetails;
-import com.bmapps.bmnews.interaction.RxMultiStringValues;
+import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 import com.bmapps.bmnews.ui.BaseView;
 import com.bmapps.bmnews.ui.fragments.BaseFragment;
 
 import java.util.List;
-import java.util.Map;
 
 import eu.davidea.flexibleadapter.items.IFlexible;
 
@@ -36,12 +34,6 @@ public interface FeedDetailsInterface extends BaseView {
     }
 
     default void showFullShimmer() {
-    }
-
-    default void showFeedsShimmer() {
-    }
-
-    default void hideFeedsShimmer() {
     }
 
     default void hideShimmer() {

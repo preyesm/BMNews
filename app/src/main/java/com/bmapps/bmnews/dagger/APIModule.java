@@ -31,11 +31,8 @@ public class APIModule {
 
     public static final int RESPONSE_404 = 404;
 
-    public static final String API_VERSION_1 = "v1.0";
+    public static final String API_VERSION_2 = "v2";
 
-    public static final String API_VERSION_2 = "v2.0";
-
-    public static final String API_VERSION_3 = "v3.0";
 
 
     @Provides
@@ -47,7 +44,7 @@ public class APIModule {
             try {
 //                requestBuilder.addHeader("User-Agent", );
 //                requestBuilder.addHeader("X-User-Agent", );
-//                requestBuilder.addHeader("secure-id", );
+                requestBuilder.addHeader("X-Api-Key", "74ff1173a2ad4d03a4f2d5fd423d8cab");
             } catch (Exception e) {
                 e.printStackTrace();
             }

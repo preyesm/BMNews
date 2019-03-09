@@ -3,6 +3,11 @@
     package="com.bmapps.bmnews">
 
     <dist:module dist:instant="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".NewsApplication"
         android:allowBackup="true"
@@ -23,5 +28,8 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
     </application>
+
+
 </manifest>

@@ -47,9 +47,11 @@ public class ErrorResponse {
         try {
             baseView.hideLoader();
             if (response.errorBody() != null) {
+
+                System.out.println("error response-->"+response.code());
                 BaseResponse baseResponse = adapter.fromJson(response.errorBody().string());
-                int code = baseResponse.code;
-                String message = baseResponse.message;
+                int code = response.code();
+                String message = baseResponse.code;
                 if (code >= 400 && code < 500) {
                     switch (code) {
                         case RESPONSE_401:

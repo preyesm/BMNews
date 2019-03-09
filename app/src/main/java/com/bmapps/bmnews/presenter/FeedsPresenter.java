@@ -1,7 +1,6 @@
 package com.bmapps.bmnews.presenter;
 
 import com.bmapps.bmnews.NewsApplication;
-import com.bmapps.bmnews.ViewDetails.FeedViewDetails;
 import com.bmapps.bmnews.interaction.RxMultiStringValues;
 import com.bmapps.bmnews.network.response.FeedListResponse;
 import com.bmapps.bmnews.network.response.NewsFeed;
@@ -10,6 +9,7 @@ import com.bmapps.bmnews.repository.NetworkRepository;
 import com.bmapps.bmnews.ui.sectionItems.TextUrlFeedSectionItem;
 import com.bmapps.bmnews.utils.CollectionUtils;
 import com.bmapps.bmnews.utils.StringUtils;
+import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +45,12 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
     private String detailsPageTitle = "";
 
     // default type of feeds is top and topics selected  is AllTopics
-    private String countryCode = "in", category = "Entertainment", source = "cnet.com";
+    private String countryCode, category = "Entertainment", source = null;
 
     private Integer groupId, currentLoadedCount = 0;
 
-    private boolean firstTimeFetch = true, groupChanged = true;
 
-    private int normalFeedsCount, editFeedItemPosition, totalFeedCount;
+    private int normalFeedsCount, totalFeedCount;
 
     @Inject
     public FeedsPresenter(NewsApplication application) {
@@ -63,7 +62,7 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
         setupSubscribers();
         switch (incomingFrom) {
             case LIST_VIEW:
-                countryCode = "top";
+                countryCode = "in";
                 groupId = null;
                 checkTypeOfFeedsAndFetch();
                 break;
@@ -78,27 +77,26 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
     }
 
     @Override
-    public void changeGroupId(int groupId) {
-        this.groupId = groupId;
-        groupChanged = true;
+    public void changeSource(String source) {
+        this.source = source;
         checkTypeOfFeedsAndFetch();
     }
 
     @Override
-    public void changeTopic(String topicString) {
-        this.category = topicString;
+    public void changeCountry(String countryCode) {
+        this.countryCode = countryCode.toLowerCase();
         checkTypeOfFeedsAndFetch();
     }
 
     @Override
-    public void changeFeedType(String feedType) {
-        this.countryCode = feedType.toLowerCase();
+    public void changeCategory(String category) {
+        this.category = category;
         checkTypeOfFeedsAndFetch();
     }
 
     @Override
     public void checkTypeOfFeedsAndFetch() {
-        getView().showFeedsShimmer();
+        getView().showFullShimmer();
         getCompleteList();
     }
 
@@ -133,12 +131,6 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                     }
                 }
                 getView().hideShimmer();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                getView().showUserErrorDialog("SOrry no feeds");
             }
         };
 
@@ -269,22 +261,5 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                 }
             }
         });
-    }
-
-    @Override
-    public void resetIsDetailsPage() {
-//        if (feedViewDetails != null) {
-//            feedViewDetails.isDetailsPage = !feedViewDetails.isDetailsPage;
-//            if (!feedViewDetails.isDetailsPage && feedViewDetails.commentViewDetailsList.size() > 1 &&
-//                    topCommentViewDetails != null) {
-//                feedViewDetails.commentViewDetailsList.clear();
-//                feedViewDetails.commentViewDetailsList.add(topCommentViewDetails);
-//            }
-//        }
-    }
-
-    @Override
-    public String getDetailsPageTitle() {
-        return this.detailsPageTitle;
     }
 }

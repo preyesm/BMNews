@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="newsFeed"
+            type="com.bmapps.bmnews.viewDetails.UrlSnippet" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/url_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_fill_white_grey_border_8">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sriv_left_top_corner_radius="7dp"
+            app:sriv_right_top_corner_radius="7dp" />
+
+        <TextView
+            android:id="@+id/url_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/rubik_medium"
+            android:singleLine="true"
+            android:text="@{newsFeed.title}"
+            android:textColor="@color/onbaording_grey"
+            android:textSize="@dimen/s16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Connect with Myspace" />
+
+        <TextView
+            android:id="@+id/url_link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/rubik_light"
+            android:singleLine="true"
+            android:text="@{newsFeed.url}"
+            android:textColor="@color/onbaording_grey"
+            android:textSize="@dimen/s12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/url_heading"
+            tools:text="Myspace.com" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

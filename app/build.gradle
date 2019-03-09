@@ -54,7 +54,7 @@ android {
     productFlavors {
         production {
             dimension "api"
-            buildConfigField 'String', 'BASE_URL', '"https://www.newsapi.org"'
+            buildConfigField 'String', 'BASE_URL', '"https://newsapi.org"'
         }
     }
 }

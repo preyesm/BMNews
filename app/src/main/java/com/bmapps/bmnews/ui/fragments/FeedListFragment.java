@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.bmapps.bmnews.NewsApplication;
 import com.bmapps.bmnews.R;
-import com.bmapps.bmnews.ViewDetails.FeedViewDetails;
 import com.bmapps.bmnews.databinding.FeedListViewBinding;
 import com.bmapps.bmnews.interaction.RxMultiStringValues;
 import com.bmapps.bmnews.network.response.ResponseObserver;
@@ -18,6 +17,7 @@ import com.bmapps.bmnews.utils.ImageUtils;
 import com.bmapps.bmnews.utils.ProgressItem;
 import com.bmapps.bmnews.utils.RxDialogBox;
 import com.bmapps.bmnews.utils.StringUtils;
+import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 
 import java.util.List;
 import java.util.Map;
@@ -83,6 +83,8 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
         presenter.setView(this);
 
         presenter.setIncomingFrom(LIST_VIEW);
+
+        binding.reload.setOnClickListener(v -> presenter.getCompleteList());
     }
 
 
@@ -101,7 +103,7 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
                 android.R.color.holo_red_light);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
             swipedDown = true;
-            showFeedsShimmer();
+            showFullShimmer();
             presenter.refreshPage();
         });
 
@@ -156,7 +158,7 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
             flexibleAdapter.clear();
             collectionUtils.updateDataSet(flexibleAdapter, iFlexibles);
             binding.feedList.smoothScrollToPosition(0);
-            hideFeedsShimmer();
+            hideShimmer();
         }
     }
 
@@ -194,6 +196,11 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
         binding.feedList.setVisibility(GONE);
     }
 
+    @Override
+    public void hideShimmer() {
+        binding.feedlistShimmer.getRoot().setVisibility(GONE);
+        binding.feedList.setVisibility(VISIBLE);
+    }
 
     @Override
     public void onLoadMore(int lastPosition, int currentPage) {
@@ -285,7 +292,7 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
 
     @Override
     public void showEmptyState() {
-        hideFeedsShimmer();
+        hideShimmer();
         binding.swipeRefreshLayout.setVisibility(GONE);
         binding.emptyState.getRoot().setVisibility(VISIBLE);
     }

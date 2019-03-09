@@ -40,8 +40,13 @@
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/onbaording_grey</item>
         <!-- Used for the background -->
-        <item name="android:background">#00000000</item>
+        <item name="android:background">#000000</item>
     </style>
 
+    <style name="item_margin">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+    </style>
 
 </resources>

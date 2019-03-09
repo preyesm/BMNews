@@ -8,7 +8,7 @@ public class StringUtils {
         return value == null || value.trim().length() == 0 || value.equals("null");
     }
 
-    public static String unEscapeEmojiString(String message) {
+    public String unEscapeEmojiString(String message) {
         return org.apache.commons.lang3.StringEscapeUtils.unescapeJava(message);
     }
 
