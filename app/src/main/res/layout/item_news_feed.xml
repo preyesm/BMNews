@@ -25,14 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/d16">
-
-        <View
-            android:id="@+id/header_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d20"
-            android:background="@color/grey_divider" />
+        android:orientation="vertical">
 
         <include
             android:id="@+id/news_header_layout"
@@ -51,10 +44,9 @@
             android:textColor="@color/onbaording_grey"
             android:textSize="@dimen/s16"
             app:font="@font/rubik_light"
-            app:isShowMore="@{true}"
-            app:textString="@{stringUtils.unEscapeEmojiString(feed.title)}"
+            app:textString="@{feed.title}"
             tools:text="All users on MySpace will know that there are millions of people out there." />
-
+<!--stringUtils.unEscapeEmojiString(-->
         <include
             android:id="@+id/url_snippet"
             style="@style/item_margin"
@@ -62,6 +54,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:newsFeed="@{feed.urlSnippet}" />
+
+        <View
+            android:id="@+id/header_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d20"
+            android:background="@color/grey_divider" />
     </LinearLayout>
 
 </layout>

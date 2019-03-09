@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:id="@+id/containerFrame"
@@ -12,7 +13,6 @@
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -20,14 +20,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:layoutAnimation="@anim/layout_anim_left_right" />
+                android:layoutAnimation="@anim/layout_anim_left_right"
+                tools:listitem="@layout/item_news_feed" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <Button
-            android:id="@+id/reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/feedlist_shimmer"

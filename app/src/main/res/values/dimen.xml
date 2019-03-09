@@ -4,6 +4,7 @@
     <dimen name="d8">8dp</dimen>
     <dimen name="d16">16dp</dimen>
     <dimen name="d20">20dp</dimen>
+    <dimen name="d24">24dp</dimen>
 
     <dimen name="s12">12sp</dimen>
     <dimen name="s16">16sp</dimen>

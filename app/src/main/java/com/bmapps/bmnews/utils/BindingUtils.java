@@ -23,20 +23,18 @@ import androidx.databinding.BindingAdapter;
 import static android.graphics.Typeface.NORMAL;
 
 public class BindingUtils {
-    @BindingAdapter({"app:textString", "app:isShowMore"})
-    public static void setTextString(TextView textView, String originalString, boolean canSetLogicForSeeMore) {
+    @BindingAdapter({"app:textString"})
+    public static void setTextString(TextView textView, String originalString) {
         boolean showSeeMore = false;
+
         if (!org.apache.commons.lang3.StringUtils.isEmpty(originalString)) {
             // reduce the character limit at the start of display and perform linkify and see more logic
-            if (canSetLogicForSeeMore && originalString.length() > 100) {
+            if (originalString.length() > 100) {
                 showSeeMore = true;
                 originalString = originalString.substring(0, 100);
             }
-
             textView.setText(originalString);
-            Linkify.addLinks(textView, Linkify.WEB_URLS);
             SpannableStringBuilder ssb = new SpannableStringBuilder(textView.getText());
-            staticRemoveUnderlinesAndColorifyUrls(textView, ssb, true);
             if (showSeeMore) {
                 String seeMore = "See more...";
                 ssb.append(" ");
@@ -47,36 +45,4 @@ public class BindingUtils {
             }
         }
     }
-
-    private static void staticRemoveUnderlinesAndColorifyUrls(TextView textView, Spannable s, boolean addClickableSpan) {
-        URLSpan spans[] = textView.getUrls();
-        for (URLSpan span : spans) {
-            int start = s.getSpanStart(span);
-            int end = s.getSpanEnd(span);
-            s.removeSpan(span);
-            if (start > -1 && end > -1) {
-                s.setSpan(new URLSpan(span.getURL()) {
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(textView.getContext(), R.color.blue));
-                    }
-
-                    @Override
-                    public void onClick(View widget) {
-                        if (addClickableSpan) {
-                            NewsApplication.getInstance().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(span.getURL())));
-                        }
-
-                    }
-                }, start, end, 0);
-            }
-
-        }
-
-        textView.setText(s);
-    }
-
-
 }

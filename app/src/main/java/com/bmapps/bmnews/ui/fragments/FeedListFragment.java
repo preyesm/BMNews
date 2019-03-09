@@ -83,8 +83,6 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
         presenter.setView(this);
 
         presenter.setIncomingFrom(LIST_VIEW);
-
-        binding.reload.setOnClickListener(v -> presenter.getCompleteList());
     }
 
 
