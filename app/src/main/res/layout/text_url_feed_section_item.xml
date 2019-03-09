@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</layout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>
+
+        <data>
+
+            <import type="android.view.View" />
+
+            <variable
+                name="imageUtils"
+                type="com.agentdesks.android.crm.newArchitecture.utils.ImageUtils" />
+
+            <variable
+                name="stringUtils"
+                type="com.agentdesks.android.crm.newArchitecture.utils.StringUtils" />
+
+            <variable
+                name="feed"
+                type="com.agentdesks.android.crm.newArchitecture.viewDetails.FeedViewDetails" />
+        </data>
+
+        <LinearLayout
+            android:id="@+id/constraint_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_marginTop="@{feed.isDetailsPage ? @dimen/d16: @dimen/d0}">
+
+            <View
+                android:id="@+id/header_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d20"
+                android:background="@color/grey_divider"
+                android:visibility="@{feed.isDetailsPage ? View.GONE : View.VISIBLE}" />
+
+            <include
+                android:id="@+id/agent_header_layout"
+                layout="@layout/item_agent_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:agentInfo="@{feed.agentInfoViewDetails}" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/rubik_light"
+                android:lineSpacingExtra="@{`question`.equals(feed.type) ? @dimen/d2 : @dimen/d4}"
+                app:textString="@{stringUtils.unEscapeEmojiString(feed.title)}"
+                app:isShowMore="@{!feed.isDetailsPage}"
+                android:textColor="@color/onbaording_grey"
+                android:textSize="@dimen/s16"
+                android:visibility="@{feed.showTitle ? View.VISIBLE : View.GONE}"
+                app:font="@{feed.type}"
+                tools:text="All users on MySpace will know that there are millions of people out there." />
+
+            <include
+                android:id="@+id/url_snippet"
+                style="@style/item_margin"
+                layout="@layout/url_snippet_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:urlSnippet="@{feed.urlSnippet}"
+                android:visibility="@{feed.urlSnippet != null ? View.VISIBLE : View.GONE}" />
+
+            <include
+                android:id="@+id/likes_location_layout"
+                layout="@layout/item_likes_location_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imageUtils="@{imageUtils}"
+                android:likesLocationInfo="@{feed.likesLocationViewDetails}" />
+
+            <include
+                android:id="@+id/action_layout"
+                layout="@layout/feed_item_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:feed="@{feed}" />
+
+        </LinearLayout>
+
+    </layout>-->
