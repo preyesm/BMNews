@@ -2,9 +2,11 @@ package com.bmapps.bmnews.presenter;
 
 import com.bmapps.bmnews.NewsApplication;
 import com.bmapps.bmnews.interaction.RxMultiStringValues;
+import com.bmapps.bmnews.network.response.CompleteNewsSourceInfo;
 import com.bmapps.bmnews.network.response.FeedListResponse;
 import com.bmapps.bmnews.network.response.NewsFeed;
 import com.bmapps.bmnews.network.response.ResponseObserver;
+import com.bmapps.bmnews.network.response.SourceList;
 import com.bmapps.bmnews.repository.NetworkRepository;
 import com.bmapps.bmnews.ui.sectionItems.TextUrlFeedSectionItem;
 import com.bmapps.bmnews.utils.CollectionUtils;
@@ -12,6 +14,7 @@ import com.bmapps.bmnews.utils.StringUtils;
 import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ import static com.bmapps.bmnews.utils.FinalValues.LIST_VIEW;
 import static com.bmapps.bmnews.utils.FinalValues.MINIMUM_FEED_COUNT;
 import static com.bmapps.bmnews.utils.FinalValues.MULTI_STRING_BUS_FOR;
 import static com.bmapps.bmnews.utils.FinalValues.MULTI_STRING_BUS_VALUE;
-import static com.bmapps.bmnews.utils.FinalValues.OPEN_URL;
+import static com.bmapps.bmnews.utils.FinalValues.OPEN_DETAIL_PAGE;
 
 
 public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPresenterInterface {
@@ -49,11 +52,13 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
 
     private Integer groupId, currentLoadedCount = 0;
 
+    private int pageCounter, totalFeedCount;
 
-    private int normalFeedsCount, totalFeedCount;
+    private NewsApplication newsApplication;
 
     @Inject
     public FeedsPresenter(NewsApplication application) {
+        this.newsApplication = application;
         application.getApplicationComponent().inject(this);
     }
 
@@ -79,18 +84,22 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
     @Override
     public void changeSource(String source) {
         this.source = source;
+        countryCode = null;
+        category = null;
         checkTypeOfFeedsAndFetch();
     }
 
     @Override
     public void changeCountry(String countryCode) {
         this.countryCode = countryCode.toLowerCase();
+        source = null;
         checkTypeOfFeedsAndFetch();
     }
 
     @Override
     public void changeCategory(String category) {
         this.category = category;
+        source = null;
         checkTypeOfFeedsAndFetch();
     }
 
@@ -116,14 +125,14 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                     super.onNext(newsFeedList);
                     currentLoadedCount = newsFeedList.getNewsFeeds().size() < MINIMUM_FEED_COUNT ? newsFeedList.getNewsFeeds().size() : MINIMUM_FEED_COUNT;
 
-                    normalFeedsCount = 0;
+                    pageCounter = 0;
 
                     if (collectionUtils.isEmpty(newsFeedList.getNewsFeeds())) {
                         decideEmptyStateBasedOnTab();
                     } else {
                         getView().hideEmptyState();
                         getView().displayFeedDataByPresenter(populateItemsForListView(newsFeedList), false);
-                        if (currentLoadedCount <= MINIMUM_FEED_COUNT) {
+                        if (totalFeedCount <= currentLoadedCount) {
                             getView().noMoreContentToLoad();
                         } else {
                             getView().addEndlessScrollListener();
@@ -132,10 +141,33 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                 }
                 getView().hideShimmer();
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                getView().hideShimmer();
+                if (totalFeedCount == 0) {
+                    getView().showEmptyState();
+                }
+            }
         };
 
         networkRepository.getFeedList(countryCode, category, source, getView())
                 .subscribe(feedsResponseObserver);
+
+        networkRepository.getSourceList(getView())
+                .subscribe(new ResponseObserver<SourceList>(getView()) {
+                    @Override
+                    public void onNext(SourceList sourceList) {
+                        super.onNext(sourceList);
+                        List<String> stringList = new ArrayList<>();
+                        for (CompleteNewsSourceInfo completeNewsSourceInfo : sourceList.getCompleteNewsSourceInfos()) {
+                            stringList.add(completeNewsSourceInfo.getName());
+                        }
+                        Collections.sort(stringList);
+                        getView().setSourceListAdapter(stringList);
+                    }
+                });
     }
 
     @Override
@@ -150,35 +182,26 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
 
     @Override
     public void getNextSetOfFeeds() {
-        String feedIdsInComma = "";
         int pendingFeeds = totalFeedCount - currentLoadedCount;
         int loadableFeeds = pendingFeeds > MINIMUM_FEED_COUNT ? MINIMUM_FEED_COUNT : pendingFeeds;
 
-//        if (pendingFeeds > 0) {
-//            int feedStartPointer, feedEndPointer = (currentLoadedCount + loadableFeeds) - 1;// doing a -1 in loadable feeds to stop adding comma before the last feed item..
-//
-//            for (feedStartPointer = currentLoadedCount; feedStartPointer < feedEndPointer; feedStartPointer++) {
-//                feedIdsInComma = feedIdsInComma.concat(String.valueOf(feedIds.get(feedStartPointer))).concat(",");
-//            }
-//
-//            feedIdsInComma = feedIdsInComma.concat(String.valueOf(feedIds.get(feedStartPointer)));
-//            //System.out.println("feeds in comma -->" + feedIdsInComma);
-//
-//            networkRepository.getNextSetOfFeeds(feedIdsInComma, getView())
-//                    .subscribe(new ResponseObserver<FeedListResponse>(getView()) {
-//                        @Override
-//                        public void onNext(FeedListResponse feedListResponse) {
-//                            super.onNext(feedListResponse);
-//                            currentLoadedCount += loadableFeeds;
-//                            // whenever the count of feeds % MINIMUM_FEED_COUNT = 0, first condition would fail and hence we add one
-//                            // more condition to check
-//                            if (currentLoadedCount == feedIds.size()) {
-//                                getView().noMoreContentToLoad();
-//                            }
-//                            getView().displayFeedDataByPresenter(populateItemsForListView(new NewsAndRelatedObjects(feedListResponse)), true);
-//                        }
-//                    });
-//        }
+        if (loadableFeeds > 0) {
+
+            networkRepository.getNextSetOfFeeds(countryCode, category, source, ++pageCounter, getView())
+                    .subscribe(new ResponseObserver<FeedListResponse>(getView()) {
+                        @Override
+                        public void onNext(FeedListResponse feedListResponse) {
+                            super.onNext(feedListResponse);
+                            currentLoadedCount += loadableFeeds;
+                            // whenever the count of feeds % MINIMUM_FEED_COUNT = 0, first condition would fail and hence we add one
+                            // more condition to check
+                            if (currentLoadedCount == totalFeedCount) {
+                                getView().noMoreContentToLoad();
+                            }
+                            getView().displayFeedDataByPresenter(populateItemsForListView(feedListResponse), true);
+                        }
+                    });
+        }
     }
 
     @Override
@@ -192,7 +215,6 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                     NewsFeed feedData = newsFeedList.getNewsFeeds().get(index);
                     if (feedData != null) {
                         upsertFeedViewDetails(feedData, new FeedViewDetails(), iFlexibleList);
-                        normalFeedsCount++;
                     }
                 }
             }
@@ -237,7 +259,7 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
     @Override
     public IFlexible createSectionItemsBasedOnType(FeedViewDetails feedViewDetails) {
         if (feedViewDetails != null && getView().getActivity() != null) {
-            return new TextUrlFeedSectionItem(getView().getActivity(), feedViewDetails, rxMultiStringValues);
+            return new TextUrlFeedSectionItem(newsApplication, feedViewDetails, rxMultiStringValues);
         }
         return null;
     }
@@ -253,8 +275,8 @@ public class FeedsPresenter extends FeedsNullCheckPresenter implements FeedsPres
                     String valueInBus = stringStringMap.get(MULTI_STRING_BUS_VALUE);
                     if (busFor != null) {
                         switch (busFor) {
-                            case OPEN_URL:
-                                getView().openUrl(valueInBus);
+                            case OPEN_DETAIL_PAGE:
+                                getView().openFeedDetails(valueInBus);
                                 break;
                         }
                     }

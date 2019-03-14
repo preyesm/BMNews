@@ -8,6 +8,7 @@
     <color name="white">#ffffff</color>
     <color name="grey2">#ffdcdcdc</color>
     <color name="battleship_grey">#6d7783</color>
+    <color name="profile_grey">#F8F9FA</color>
     <color name="deals_seperator_grey">#e6e6e6</color>
     <color name="slate_grey">#696969</color>
     <color name="toolbar_view">#c9d1df</color>

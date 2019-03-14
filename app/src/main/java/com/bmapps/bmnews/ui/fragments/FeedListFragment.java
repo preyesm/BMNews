@@ -19,6 +19,7 @@ import com.bmapps.bmnews.utils.RxDialogBox;
 import com.bmapps.bmnews.utils.StringUtils;
 import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,12 +30,15 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
-import eu.davidea.flexibleadapter.items.IHolder;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.bmapps.bmnews.utils.FinalValues.CATEGORY;
+import static com.bmapps.bmnews.utils.FinalValues.COUNTRY;
 import static com.bmapps.bmnews.utils.FinalValues.LIST_VIEW;
 import static com.bmapps.bmnews.utils.FinalValues.MULTI_STRING_BUS_FOR;
+import static com.bmapps.bmnews.utils.FinalValues.MULTI_STRING_BUS_VALUE;
+import static com.bmapps.bmnews.utils.FinalValues.SOURCE;
 
 public class FeedListFragment extends BaseFragment implements FeedDetailsInterface,
         FlexibleAdapter.EndlessScrollListener {
@@ -70,6 +74,7 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.feed_list_view, container, false);
         return binding.getRoot();
+
     }
 
     @Override
@@ -105,21 +110,53 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
             presenter.refreshPage();
         });
 
+        binding.categoryField.textInputLayout.setHint(activity.getResources().getString(R.string.select_category));
+        binding.countryField.textInputLayout.setHint(activity.getResources().getString(R.string.select_country));
+        binding.sourceField.textInputLayout.setHint(activity.getResources().getString(R.string.select_source));
+
+        collectionUtils.setListInAdapter(binding.categoryField.autoCompleteTextView,
+                activity,
+                Arrays.asList(activity.getResources().getStringArray(R.array.categories)),
+                multiStringValues,
+                CATEGORY);
+
+        collectionUtils.setListInAdapter(binding.countryField.autoCompleteTextView,
+                activity,
+                Arrays.asList(activity.getResources().getStringArray(R.array.country_code)),
+                multiStringValues,
+                COUNTRY);
+
+
         flexibleAdapter = collectionUtils.setUpRecyclerView(binding.feedList, null, false);
-
-        flexibleAdapter.mItemClickListener = (view, position) -> {
-            IFlexible item = flexibleAdapter.getItem(position);
-            if (item instanceof IHolder && ((IHolder) item).getModel() instanceof FeedViewDetails) {
-//                openFeedDetails(((FeedViewDetails) ((IHolder) item).getModel()), false, null);
-            }
-            return false;
-        };
-
     }
 
     @Override
     public IFlexible getIFlexibleFromPosition(int position) {
         return flexibleAdapter.getItem(position);
+    }
+
+    @Override
+    public void setSourceListAdapter(List<String> strings) {
+        collectionUtils.setListInAdapter(binding.sourceField.autoCompleteTextView,
+                activity,
+                strings,
+                multiStringValues,
+                SOURCE);
+    }
+
+    @Override
+    public void preSelectAutoCompleteView(String key, String value) {
+        switch (key) {
+            case COUNTRY:
+                binding.countryField.autoCompleteTextView.setText(value);
+                break;
+            case CATEGORY:
+                binding.categoryField.autoCompleteTextView.setText(value);
+                break;
+            case SOURCE:
+                binding.sourceField.autoCompleteTextView.setText(value);
+                break;
+        }
     }
 
     @Override
@@ -129,9 +166,18 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
             public void onNext(Map<String, String> stringStringMap) {
                 super.onNext(stringStringMap);
                 String busFor = stringStringMap.get(MULTI_STRING_BUS_FOR);
+                String value = stringStringMap.get(MULTI_STRING_BUS_VALUE);
                 if (!stringUtils.isEmpty(busFor)) {
                     switch (busFor) {
-
+                        case CATEGORY:
+                            presenter.changeCategory(value);
+                            break;
+                        case COUNTRY:
+                            presenter.changeCountry(value);
+                            break;
+                        case SOURCE:
+                            presenter.changeSource(value);
+                            break;
                     }
                 }
             }
@@ -190,12 +236,25 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
 
     @Override
     public void showFullShimmer() {
+        binding.emptyState.getRoot().setVisibility(GONE);
         binding.feedlistShimmer.getRoot().setVisibility(VISIBLE);
         binding.feedList.setVisibility(GONE);
     }
 
     @Override
     public void hideShimmer() {
+        binding.feedlistShimmer.getRoot().setVisibility(GONE);
+        binding.feedList.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void showFeedsShimmer() {
+        binding.feedlistShimmer.getRoot().setVisibility(VISIBLE);
+        binding.feedList.setVisibility(GONE);
+    }
+
+    @Override
+    public void hideFeedsShimmer() {
         binding.feedlistShimmer.getRoot().setVisibility(GONE);
         binding.feedList.setVisibility(VISIBLE);
     }
@@ -221,10 +280,15 @@ public class FeedListFragment extends BaseFragment implements FeedDetailsInterfa
 
     }
 
-//    @Override
-//    public void openFeedDetails(FeedViewDetails feedViewDetails, boolean shouldOpenEditText) {
-////        loadChildFragment(fragmentInstanceCreator.getFeedDetailsFragment(feedViewDetails, shouldOpenEditText, editCommentViewDetails));
-//    }
+    @Override
+    public void openFeedDetails(String url) {
+        loadChildFragment(DetailNewsFragment.getInstance(url));
+    }
+
+    @Override
+    public FeedViewDetails getFeedViewDetails() {
+        return null;
+    }
 
     @Override
     public void objectNotFound() {

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/rootToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layoutDirection="rtl"
-            android:theme="@style/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <!--<androidx.appcompat.widget.Toolbar-->
+            <!--android:id="@+id/rootToolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?android:attr/actionBarSize"-->
+            <!--android:layoutDirection="rtl"-->
+            <!--android:theme="@style/toolbar"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent">-->
 
-            <RelativeLayout
-                android:id="@+id/toolBarGravity"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layoutDirection="ltr">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/toolBarGravity"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?android:attr/actionBarSize">-->
 
-                <TextView
-                    android:id="@+id/toolbar_title_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/rubik_regular"
-                    android:singleLine="true"
-                    android:textColor="@color/onbaording_grey"
-                    android:textSize="@dimen/s16"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/toolbar_title_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:fontFamily="@font/rubik_regular"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textColor="@color/onbaording_grey"-->
+                    <!--android:textSize="@dimen/s16"-->
+                    <!--tools:text="testing title" />-->
+            <!--</RelativeLayout>-->
 
-        </androidx.appcompat.widget.Toolbar>
+        <!--</androidx.appcompat.widget.Toolbar>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.bmapps.bmnews.R;
-import com.bmapps.bmnews.databinding.GenericTextOkCancelDialogBinding;
+import com.bmapps.bmnews.databinding.DialogGenericTextOkCancelBinding;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -33,7 +33,7 @@ public class RxDialogBox {
         final AlertDialog dialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        GenericTextOkCancelDialogBinding binding = DataBindingUtil.inflate(inflater, R.layout.generic_text_ok_cancel_dialog, null, false);
+        DialogGenericTextOkCancelBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_generic_text_ok_cancel, null, false);
         builder.setView(binding.getRoot());
         dialog = builder.create();
 

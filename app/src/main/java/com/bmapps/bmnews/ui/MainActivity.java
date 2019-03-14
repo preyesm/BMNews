@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(baseFragment, true, FADE_EFFECT);
     }
 
-
     public void loadFragment(BaseFragment fragment, boolean clearBackStack, FragmentLoadingAnim animationEffect) {
 
         ActionBar actionBar = getSupportActionBar();
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         try {
-            binding.toolbarTitleText.setText("");
+//            binding.toolbarTitleText.setText("");
             if (clearBackStack) {
                 fm.popBackStack(0, POP_BACK_STACK_INCLUSIVE);
                 ft.replace(R.id.fragmentContainer, fragment, null);

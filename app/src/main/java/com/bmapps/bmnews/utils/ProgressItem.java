@@ -1,17 +1,16 @@
 package com.bmapps.bmnews.utils;
 
 
-import android.animation.Animator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bmapps.bmnews.R;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -39,21 +38,16 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressView
         //nothing to bind
     }
 
-    public static class ProgressViewHolder extends FlexibleViewHolder {
+    class ProgressViewHolder extends FlexibleViewHolder {
 
-        public ImageView progressBar;
+        ImageView progressBar;
 
-        public ProgressViewHolder(View view, FlexibleAdapter adapter) {
+        ProgressViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             progressBar = view.findViewById(R.id.progress_bar);
-//            Glide.with(progressBar.getContext())
-//                    .load(R.raw.loading)
-//                    .into(progressBar);
-        }
-
-        @Override
-        public void scrollAnimators(@NonNull List<Animator> animators, int position, boolean isForward) {
-//            AnimatorHelper.scaleAnimator(animators, itemView, 0f);
+            Glide.with(progressBar.getContext())
+                    .load(R.raw.loading)
+                    .into(progressBar);
         }
     }
 

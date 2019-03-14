@@ -3,4 +3,62 @@
     <string name="errorInFetching">Something went wrong.Please try later</string>
     <string name="pleaseWait">Please wait</string>
     <string name="loader">Loading&#8230;</string>
+    <string name="select_source">Select source</string>
+    <string name="select_country">Select country code</string>
+    <string name="select_category">News category</string>
+    <string-array name="categories">
+        <item>Business</item>
+        <item>Entertainment</item>
+        <item>General</item>
+        <item>Health</item>
+        <item>Science</item>
+        <item>Sports</item>
+        <item>Technology</item>
+    </string-array>
+
+    <string-array name="country_code">
+        <item>AE</item>
+        <item>AR</item>
+        <item>AU</item>
+        <item>BE</item>
+        <item>BG</item>
+        <item>BR</item>
+        <item>CA</item>
+        <item>CH</item>
+        <item>CN</item>
+        <item>CO</item>
+        <item>CU</item>
+        <item>CZ</item>
+        <item>DE</item>
+        <item>EG</item>
+        <item>FR</item>
+        <item>GB</item>
+        <item>GR</item>
+        <item>HK</item>
+        <item>HU</item>
+        <item>ID</item>
+        <item>IE</item>
+        <item>IL</item>
+        <item>IN</item>
+        <item>IT</item>
+        <item>JP</item>
+        <item>KR</item>
+        <item>LT</item>
+        <item>LV</item>
+        <item>MA</item>
+        <item>MX</item>
+        <item>MY</item>
+        <item>NG</item>
+        <item>NL</item>
+        <item>NO</item>
+        <item>NZ</item>
+        <item>PH</item>
+        <item>PL</item>
+        <item>PT</item>
+        <item>RO</item>
+        <item>UA</item>
+        <item>US</item>
+        <item>VE</item>
+        <item>ZA</item>
+    </string-array>
 </resources>

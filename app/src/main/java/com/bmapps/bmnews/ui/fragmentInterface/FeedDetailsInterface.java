@@ -2,9 +2,9 @@ package com.bmapps.bmnews.ui.fragmentInterface;
 
 import android.app.Activity;
 
-import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 import com.bmapps.bmnews.ui.BaseView;
 import com.bmapps.bmnews.ui.fragments.BaseFragment;
+import com.bmapps.bmnews.viewDetails.FeedViewDetails;
 
 import java.util.List;
 
@@ -21,28 +21,21 @@ public interface FeedDetailsInterface extends BaseView {
 
     void noMoreContentToLoad();
 
-    default IFlexible getIFlexibleFromPosition(int position) {
-        return null;
-    }
+    IFlexible getIFlexibleFromPosition(int position);
 
-    default void openFeedDetails(FeedViewDetails feedViewDetails) {
+    void openFeedDetails(String url);
 
-    }
+    void setUpSubscribers();
 
-    default void setUpSubscribers() {
+    void showFullShimmer();
 
-    }
+    void hideShimmer();
 
-    default void showFullShimmer() {
-    }
+    void showFeedsShimmer();
 
-    default void hideShimmer() {
-    }
+    void hideFeedsShimmer();
 
-    default FeedViewDetails getFeedViewDetails() {
-        return new FeedViewDetails();
-    }
-
+    FeedViewDetails getFeedViewDetails();
 
     void openUrl(String url);
 
@@ -54,11 +47,11 @@ public interface FeedDetailsInterface extends BaseView {
 
     void shareFeed(String url);
 
-    default void showEmptyState() {
+    void showEmptyState();
 
-    }
+    void hideEmptyState();
 
-    default void hideEmptyState() {
+    void setSourceListAdapter(List<String> strings);
 
-    }
+    void preSelectAutoCompleteView(String key, String value);
 }

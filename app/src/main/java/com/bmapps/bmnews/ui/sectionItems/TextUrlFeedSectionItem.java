@@ -1,13 +1,14 @@
 package com.bmapps.bmnews.ui.sectionItems;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bmapps.bmnews.NewsApplication;
 import com.bmapps.bmnews.R;
 import com.bmapps.bmnews.databinding.ItemNewsFeedBinding;
 import com.bmapps.bmnews.interaction.RxMultiStringValues;
+import com.bmapps.bmnews.utils.CollectionUtils;
 import com.bmapps.bmnews.utils.ImageUtils;
 import com.bmapps.bmnews.utils.StringUtils;
 import com.bmapps.bmnews.viewDetails.FeedViewDetails;
@@ -22,6 +23,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 
+import static com.bmapps.bmnews.utils.FinalValues.OPEN_DETAIL_PAGE;
+
 public class TextUrlFeedSectionItem extends AbstractFlexibleItem<TextUrlFeedSectionItem.ViewHolder> {
 
     @Inject
@@ -30,10 +33,18 @@ public class TextUrlFeedSectionItem extends AbstractFlexibleItem<TextUrlFeedSect
     @Inject
     StringUtils stringUtils;
 
-    FeedViewDetails feedViewDetails;
+    @Inject
+    CollectionUtils collectionUtils;
 
-    public TextUrlFeedSectionItem(Activity activity, FeedViewDetails feedViewDetails, RxMultiStringValues rxMultiStringValues) {
+    private FeedViewDetails feedViewDetails;
+
+    private RxMultiStringValues rxMultiStringValues;
+
+    public TextUrlFeedSectionItem(NewsApplication newsApplication, FeedViewDetails feedViewDetails, RxMultiStringValues rxMultiStringValues) {
+
+        newsApplication.getApplicationComponent().inject(this);
         this.feedViewDetails = feedViewDetails;
+        this.rxMultiStringValues = rxMultiStringValues;
     }
 
     @Override
@@ -63,17 +74,13 @@ public class TextUrlFeedSectionItem extends AbstractFlexibleItem<TextUrlFeedSect
         holder.mBinding.setStringUtils(stringUtils);
         holder.mBinding.executePendingBindings();
 
-//        super.setAgentHeaderBinding(holder.mBinding.agentHeaderLayout, position);
-//
-//        super.setupClickListeners(holder.itemView, holder.mBinding.title, holder.mBinding.actionLayout, holder.mBinding.likesLocationLayout, position);
+        imageUtils.setNameAvatar(feedViewDetails.source.charAt(0), holder.mBinding.newsHeaderLayout.imgNewsSource, R.color.colorPrimary);
 
         // set url snippet in view
         if (feedViewDetails.urlSnippet != null) {
-//            imageUtils.setImageUsingGlide(feedViewDetails.urlSnippet.getImage(), holder.mBinding.urlSnippet.image, R.drawable.ic_no_image_text);
-//            holder.mBinding.urlSnippet.getRoot().setOnClickListener(v -> collectionUtils.populateRxMultiStringBusAndSendData(rxMultiStringValues, OPEN_URL, feedViewDetails.urlSnippet.getUrl()));
+            imageUtils.setImageUsingGlide(feedViewDetails.urlSnippet.getImageUrl(), holder.mBinding.urlSnippet.image);
+            holder.mBinding.urlSnippet.getRoot().setOnClickListener(v -> collectionUtils.populateRxMultiStringBusAndSendData(rxMultiStringValues, OPEN_DETAIL_PAGE, feedViewDetails.urlSnippet.getUrl()));
         }
-//        ((GradientDrawable) holder.mBinding.urlSnippet.urlLayout.getBackground()).setColor(ContextCompat.getColor(holder.mBinding.urlSnippet.getRoot().getContext(), R.color.profile_grey));
-//        ((GradientDrawable) holder.mBinding.urlSnippet.urlLayout.getBackground()).setStroke(1, ContextCompat.getColor(holder.mBinding.urlSnippet.getRoot().getContext(), R.color.referral_client_count));
     }
 
     class ViewHolder extends FlexibleViewHolder {
@@ -84,5 +91,6 @@ public class TextUrlFeedSectionItem extends AbstractFlexibleItem<TextUrlFeedSect
             mBinding = binding;
         }
     }
+
 
 }

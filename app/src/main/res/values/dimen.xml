@@ -8,4 +8,5 @@
 
     <dimen name="s12">12sp</dimen>
     <dimen name="s16">16sp</dimen>
+    <dimen name="s24">24sp</dimen>
 </resources>

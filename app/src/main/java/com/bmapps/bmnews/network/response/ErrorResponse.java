@@ -32,7 +32,7 @@ public class ErrorResponse {
     public void showError(BaseView baseView, Throwable e) {
         baseView.hideLoader();
         String message = e.getMessage();
-        if (message.contains("agentdesks.com")) {
+        if (message.contains("newsapi.org")) {
             message = "Please check your Internet Connection";
         } else {
             message = "Something went wrong!";

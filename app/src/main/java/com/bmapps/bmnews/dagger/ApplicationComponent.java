@@ -5,6 +5,7 @@ import com.bmapps.bmnews.network.response.ErrorResponse;
 import com.bmapps.bmnews.presenter.FeedsPresenter;
 import com.bmapps.bmnews.repository.NetworkRepository;
 import com.bmapps.bmnews.ui.fragments.FeedListFragment;
+import com.bmapps.bmnews.ui.sectionItems.TextUrlFeedSectionItem;
 import com.bmapps.bmnews.utils.CollectionUtils;
 
 import javax.inject.Singleton;
@@ -32,6 +33,8 @@ public interface ApplicationComponent {
 
     //ui
     void inject(FeedListFragment feedListFragment);
+
+    void inject(TextUrlFeedSectionItem textUrlFeedSectionItem);
 
     //utils
     void inject(CollectionUtils collectionUtils);

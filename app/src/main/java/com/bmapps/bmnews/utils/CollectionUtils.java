@@ -1,13 +1,17 @@
 package com.bmapps.bmnews.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 
 import com.bmapps.bmnews.NewsApplication;
 import com.bmapps.bmnews.R;
@@ -15,6 +19,7 @@ import com.bmapps.bmnews.databinding.FetchOrErrorLayoutBinding;
 import com.bmapps.bmnews.databinding.LoaderLayerBinding;
 import com.bmapps.bmnews.interaction.RxMultiStringValues;
 import com.bmapps.bmnews.ui.MainActivity;
+import com.bmapps.bmnews.viewDetails.CustomListAutoCompletionAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,11 +84,8 @@ public class CollectionUtils {
     public void showNetworkErrorMessage(FetchOrErrorLayoutBinding binding, Activity activity) {
         binding.fetchOrError.setText(activity.getResources().getString(R.string.errorInFetching));
         binding.fetchOrError.setBackgroundColor(Color.parseColor("#CA3543"));
-//        binding.fetchOrError.setTextColor(ContextCompat.getColor(binding.getRoot().application, R.color.white));
         binding.getRoot().setVisibility(VISIBLE);
-        new Handler().postDelayed(() -> {
-            binding.getRoot().setVisibility(GONE);
-        }, 1000);
+        binding.getRoot().setOnClickListener(v -> binding.getRoot().setVisibility(GONE));
     }
 
     public void showFetchingLayoutWithMessage(FetchOrErrorLayoutBinding binding, String text, Activity activity) {
@@ -178,5 +180,35 @@ public class CollectionUtils {
             e.printStackTrace();
         }
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void setListInAdapter(InstantAutoCompleteView autoCompleteTextView,
+                                 Activity activity, List<String> list,
+                                 RxMultiStringValues rxMultiStringValues,
+                                 String forWhom) {
+        populateCustomAutoCompleteAdapter(autoCompleteTextView, activity, list);
+        autoCompleteTextView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+
+            if (rxMultiStringValues != null) {
+                Map<String, String> map = new HashMap<>();
+                map.put(MULTI_STRING_BUS_FOR, forWhom);
+                map.put(MULTI_STRING_BUS_VALUE, autoCompleteTextView.getText().toString());
+                rxMultiStringValues.sendData(map);
+            }
+
+        });
+        autoCompleteTextView.setOnTouchListener((View v, MotionEvent event) -> {
+            autoCompleteTextView.showDropDown();
+            return false;
+        });
+    }
+
+    public void populateCustomAutoCompleteAdapter(AutoCompleteTextView autoCompleteTextView, Activity activity, List<String> list) {
+        CustomListAutoCompletionAdapter adapter = new CustomListAutoCompletionAdapter(activity, R.layout.auto_complete_adapter, list);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setThreshold(1);
+        autoCompleteTextView.setAdapter(adapter);
+    }
+
 
 }
