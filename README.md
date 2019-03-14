@@ -5,8 +5,8 @@ Assumptions made:
   Default category - Entertainment
 
 Highlights:
-1. Have followed the MVP architecture, dividing the application into 4 layers(UI, Presenter, Repository and Network).
-2. Every outer layer knows about the inner layer and inner layer doesn't know about the calling layer.
+1. Have followed the MVP architecture, dividing the application into 4 layers(UI, Presenter, Repository and Network) - following SOLID principles.
+2. Every outer layer knows about the inner layer and inner layer doesn't know about the calling layer( in line with clean code architecture).
 3. Application has implemented the material theme (androidX)
 
 Libraries used:
